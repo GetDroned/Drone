@@ -12,3 +12,4 @@ flexi_logger = "0.29.6"
 log = "0.4"
 egui = "0.21"
 eframe = "0.21"
+wg_2024 = { path = "WGL_repo_2024" }

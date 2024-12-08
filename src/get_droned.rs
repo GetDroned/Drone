@@ -1,8 +1,15 @@
 use std::collections::{HashMap, HashSet};
 use flexi_logger::{Age, Cleanup, Criterion::Age as AgeCriterion, FileSpec, Logger, Naming};
 use std::error::Error;
+use std::fmt::Display;
 use crossbeam_channel::{select_biased, Receiver, Sender};
-use log::info;
+use log::{info, warn};
+use wg_2024::packet::{FloodRequest, Nack, NackType, NodeType, Packet, PacketType};
+use wg_2024::network::{NodeId};
+use wg_2024::controller::{DroneCommand, DroneEvent};
+use wg_2024::drone::Drone;
+
+
 
 /// Initialize a global logger for the GetDroned drone.
 /// You can initialize the logger in your network initializer or main function using this function.
@@ -40,6 +47,7 @@ pub fn init_logger() -> Result<(), Box<dyn Error>> {
 ///
 /// A drone has a unique identifier, a packet drop rate, a list of neighboring drones,
 /// and handles sending and receiving messages within the simulation.
+
 #[derive(Debug)]
 pub struct GetDroned {
     /// Unique identifier for the drone.
@@ -106,9 +114,6 @@ impl Drone for GetDroned {
     /// The drone will listen for incoming packets and commands. If a crash command is received, it stops execution.
     fn run(&mut self) {
         info!("Drone {} started execution.", self.id);
-
-        info!("Drone {} started execution.", self.id);
-
         loop {
             select_biased! {
                 recv(self.command_receiver) -> command => {
@@ -128,7 +133,7 @@ impl Drone for GetDroned {
                         },
                         Err(e) => {
                             if self.is_crashed {
-                                info!("Drone {} finished execution.", self.id);
+                                info!("Drone {} finished execution.", self.id); // Logging ici
                                 return;
                             } else {
                                 warn!("Drone {} failed to receive a packet: {:?}", self.id, e);
@@ -138,8 +143,6 @@ impl Drone for GetDroned {
                 },
             }
         }
-
-        info!("Drone {} finished execution.", self.id);
     }
 }
 
@@ -229,7 +232,7 @@ impl GetDroned {
         }
     }
 
-    fn send_flood_request(&self, mut packet: Packet, received_from: NodeId) {
+    fn send_flood_request(&self, packet: Packet, received_from: NodeId) {
         for neighbor in self.packet_senders.clone() {
             if neighbor.0 != received_from {
                 match neighbor.1.send(packet.clone()) {
