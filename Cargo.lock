@@ -2885,6 +2885,7 @@ name = "wg_tests"
 version = "0.1.0"
 dependencies = [
  "crossbeam-channel",
+ "wg_controller",
  "wg_drone",
  "wg_network",
  "wg_packet",
