@@ -1,5 +1,5 @@
 pub mod get_droned;
 
 fn main() {
-    println!("Hello, world!");
+    println!("Thank you for using Get Droned !");
 }
