@@ -17,3 +17,5 @@ To use GetDroned, you can initialize the logger in your network initializer or m
 ## Contact
 
 For any modifications or support, we are available 24/7!
+
+Made by (telegrams) : @ElementalAether, @PinkArtemis, @arthurbrnn, @quentin_grn
