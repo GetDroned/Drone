@@ -14,8 +14,6 @@ GetDroned is a drone implementation that can send and receive messages, handle c
 
 To use GetDroned, you can initialize the logger in your network initializer or main function using the `init_logger` function. You can also just use your own log initialization function.
 
-```python
-
 ## Contact
 
 For any modifications or support, we are available 24/7!
