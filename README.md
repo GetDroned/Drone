@@ -15,6 +15,7 @@ Our team is characterized by multiculturalism, and working together has allowed 
 ## **Importing GetDroned**
 
 Add these dependencies to your `Cargo.toml`:
+_Note that, in the last line, you can remove "features = ["log"]" to avoid log creation._
 
 ```toml
 [dependencies]
@@ -38,7 +39,7 @@ let drone = GetDroned::new(
     controller_receiver,      // Channel for receiving commands
     packet_receiver,          // Channel for receiving packets
     packet_senders,           // Map of channels for neighbors
-    0.1,                      // Packet drop rate (0.0 - 1.0)
+    pdr,                      // Packet drop rate (0.0 - 1.0)
 );
 ```
 
@@ -48,6 +49,29 @@ To run a drone:
 
 ```rust
 drone.run();
+```
+
+### **Usage Example**
+
+This is a working usage example with dummy datas and explicit imports.
+
+```
+use crossbeam_channel::unbounded;
+use getdroned::GetDroned;
+use std::collections::HashMap;
+use wg_2024::drone::Drone;
+
+fn main() {
+    let mut drone = GetDroned::new(
+        1,
+        unbounded().0,
+        unbounded().1,
+        unbounded().1,
+        HashMap::new(),
+        0.1,
+    );
+    drone.run();
+}
 ```
 
 ---
