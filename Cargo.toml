@@ -2,7 +2,7 @@
 name = "get-droned"
 version = "0.1.0"
 edition = "2021"
-repository = "https://github.com/tuo-progetto"
+repository = "https://github.com/GetDroned/Drone.git"
 
 [features]
 log = []
