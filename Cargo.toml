@@ -10,9 +10,9 @@ log = []
 [dependencies]
 toml = "0.8.19"
 serde = { version = "1.0.214", features = ["derive"] }
-crossbeam-channel = "0.5.13"
-rand = "0.8.5"
-flexi_logger = "0.29.6"
+crossbeam-channel = ">=0.5.13"
+rand = ">=0.8.5"
+flexi_logger = ">=0.29.6"
 log = "0.4"
 egui = "0.21"
 eframe = "0.21"
