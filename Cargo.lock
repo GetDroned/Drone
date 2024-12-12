@@ -1077,7 +1077,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "get-droned"
+name = "getdroned"
 version = "0.1.0"
 dependencies = [
  "crossbeam-channel",
