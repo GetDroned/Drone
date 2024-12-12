@@ -17,7 +17,7 @@ pub fn init_logger() -> Result<(), Box<dyn Error>> {
         .unwrap()
         .log_to_file(
             FileSpec::default()
-                .directory("logs")
+                .directory("getdroned_logs")
                 .basename("")
                 .suffix("log"),
         )
