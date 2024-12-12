@@ -1,15 +1,13 @@
-use std::collections::{HashMap, HashSet};
+use crossbeam_channel::{select_biased, Receiver, Sender};
 use flexi_logger::{Age, Cleanup, Criterion::Age as AgeCriterion, FileSpec, Logger, Naming};
+use log::{info, warn};
+use std::collections::{HashMap, HashSet};
 use std::error::Error;
 use std::fmt::Display;
-use crossbeam_channel::{select_biased, Receiver, Sender};
-use log::{info, warn};
-use wg_2024::packet::{FloodRequest, Nack, NackType, NodeType, Packet, PacketType};
-use wg_2024::network::{NodeId};
 use wg_2024::controller::{DroneCommand, DroneEvent};
 use wg_2024::drone::Drone;
-
-
+use wg_2024::network::NodeId;
+use wg_2024::packet::{FloodRequest, Nack, NackType, NodeType, Packet, PacketType};
 
 /// Initialize a global logger for the GetDroned drone.
 /// You can initialize the logger in your network initializer or main function using this function.
@@ -114,6 +112,9 @@ impl Drone for GetDroned {
     /// The drone will listen for incoming packets and commands. If a crash command is received, it stops execution.
     fn run(&mut self) {
         info!("Drone {} started execution.", self.id);
+        if cfg!(feature = "log") {
+            let _ = init_logger();
+        }
         loop {
             select_biased! {
                 recv(self.command_receiver) -> command => {
