@@ -84,6 +84,8 @@ The logging feature uses **flexi_logger** to manage rotating files. The logger s
 - Dropped packets: `PacketDropped`
 - Received commands: `CommandReceived`
 
+You can use our dedicated Logger Initializer function in getDronedFile. However, we recommend that you create your own function.
+
 Sample output:
 
 ```
